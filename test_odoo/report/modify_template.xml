@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="modify_report_tamplate" inherit_id="sale.report_saleorder_document">
+
+        <xpath expr="//h2"  position="after">
+            <div class="row">
+                <h3> Cambio de reporte </h3>
+                <p><span t-field="doc.origin"> </span> </p>
+                <t t-set="cantidad_detalles" t-value="0"/>
+                <t t-set="cantidad_detalles2" t-value="cantidad_detalles +1"/>
+                <span t-esc="cantidad_detalles"/>
+                <span t-esc="cantidad_detalles2"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>
+

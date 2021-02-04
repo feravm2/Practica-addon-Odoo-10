@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="test_report_tamplate">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                        <h2>Titulo Reporte</h2>
+                        <p>Titulo <span t-field="o.name"/></p>
+                        <p>Compañia <span t-field="o.partner_id"/></p>                        
+
+                        <div class="oe_structure"/>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <th>Descripcion</th>
+                                    <th>Numero</th>
+                                </thead>
+                                 <tbody>
+                                     <t t-foreach="o.line_ids" t-as="line_ids">
+                                        <tr>
+                                            <td><span t-field="line_ids.description_log"/></td>
+                                            <td><span t-field="line_ids.valor_1"/></td>                                
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>   
+                        <table class="table table-condensed">
+                            <thead>
+                                <th>Codigo de barras</th>
+                                <th>Logo de la compania</th>
+                            </thead>
+                            <tbody>
+                                <img class="barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('EAN13','123456', 300, 60)" style="height:60px;"  alt="certificado"/>
+                                <div
+                                    class="card-img-top"
+                                    t-field="o.file_acepted"
+                                    t-options='{"widget": "image"}'
+                                />
+                             </tbody>
+                        </table> 
+                        <p></p>    
+                        
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
+<!--
+
+
+<table>
+                        <caption>Ejemplo de tabla</caption>
+                        <tbody>
+                            <tr>
+                            <td>Valor 1  </td>
+                            <th><p>   <span t-field="o.value"/></p></th>
+                            </tr>
+                            <tr>
+                            <th>Valor2   </th>
+                            <td><p>   <span t-field="o.value2"/></p></td>
+                            </tr>
+                            <tr>
+                            <th>Valor flotante   </th>
+                            <td><p>   <span t-field="o.float_value"/></p></td>
+                            </tr>
+                        </tbody>
+                        </table>
+
+-->

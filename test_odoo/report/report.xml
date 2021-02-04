@@ -1,0 +1,12 @@
+<odoo>
+    <report
+        id="test_report"
+        model="test.odoo"
+        string="Invoices"
+        report_type="qweb-html"
+        name="test_odoo.test_report_tamplate"
+        file="test_odoo.test_report_tamplate"
+    />
+</odoo>
+
+
