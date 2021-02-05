@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="test_res_partner" model="ir.ui.view">
+        <field name="name">test_res_partner_form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook"  position="inside">
+                <page string="Test Description">
+                    <group>                    
+                        <field name="description"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='lang']"  position="after">
+                <field name="test_value" widget='radio'/>
+            </xpath>
+            <xpath expr="//field[@name='phone']"  position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="test_res_partner" model="ir.ui.view">
+        <field name="name">test_change_notify_email</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="mail.view_emails_partner_info_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='notify_email']"  position="replace">
+                 <field name="notify_email"/>
+            </xpath>
+        </field>
+    </record>
+    
+</odoo>

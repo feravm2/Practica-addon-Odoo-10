@@ -1,0 +1,260 @@
+<odoo>
+  <data>
+    <!-- Window action button -->
+    <act_window id="action_boton"
+        name="Ordenes"
+        res_model="sale.order"
+        view_mode="tree,form" 
+        domain="[('partner_id', '=', default_partner_id)]"/>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="test_odoo.list" >
+      <field name="name">test_odoo list</field>
+      <field name="model">test.odoo</field>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+      <form string="Edit Sales Menu">
+          <header>
+             <button name="set_open" string="Re-name project" type="object"/>
+             <button name="set_template" string="Sales number" type="object" />
+             <button name="set_status" string="State Inactive" type="object"/>
+             <button name="set_cancel_orders" string="Cancel Orders" type="object"/>
+             <field name="status" widget="statusbar"/>
+         </header>
+         <sheet>
+            <div class="oe_button_box" name="button_box">
+            <button class="oe_stat_button" type="action" name="%(action_boton)d" icon="fa-bitcoin" context="{'default_partner_id': partner_id}" >
+              <field string="Sales" name="rediction_bt" widget="statinfo"/>
+            </button>  
+            </div>
+            <group>               
+              <group>
+                <field name="name"  />
+                <field name='partner_id' 
+                options="{'no_quick_create':True,'no_create_edit':True, 'no_open': True}"
+                domain="[('customer', '=',True)]"
+                />
+                <field name='phone'  />
+                <field name="value" /> 
+                <field name="value2" string = "Valor sin IVA" force_save = "1"/>
+                <field name="float_value" /> 
+                <field name="start_date"/>
+                <field name="file_acepted2" string = "Archivo"/>
+                <field name="description"/>
+              </group>
+              <group>
+              <field name="file_acepted" nolabel='1' widget='image'/>
+              </group>                
+            </group>
+            <notebook>
+                <page name = "info_Client" string="Detalles">
+                <group string ="Detalles">
+              <field name="line_ids" nolabel = '1'>
+                <tree string="Test Detalles Tree">
+                    <field name="description_log"/>
+                    <field name="valor_1"/>
+                    <field name="log_id" invisible="1"/>
+                </tree>
+                <form>
+                    <group>
+                        <field name="description_log"/>
+                        <field name="valor_1"/>
+                        <field name="log_id" invisible="1"/>
+                    </group>
+                </form>
+              </field>
+            </group>     
+                </page>
+                <page name ="info_Client2" string="Ventas2">
+                  <group>
+                    <field name='sale_ids' widget="many2many_tags" /> 
+                    <field name='total_sales' string= "Total ventas"/>
+                  </group>                  
+                </page>
+              </notebook>                      
+          </sheet>
+          <!-- Your usual form view goes here-->
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>                
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+        </form>
+      </field>
+    </record>
+
+        <!-- Lista-->
+    <record model="ir.ui.view" id="tech_tree_view">
+        <field name="name">tech.tree</field>
+        <field name="model">test.odoo</field>
+        <field name="arch" type="xml">
+            <tree string="Lista Tree" decoration-danger="status=='active'" default_order="value desc"> 
+              <field name="folio"/>
+              <field name="status"/>
+              <field name="name" />
+              <field name='partner_id' 
+              options="{'no_quick_create':True,'no_create_edit':True, 'no_open': True}"
+              domain="[('customer', '=',True)]"
+              />
+              <field name="value" /> 
+              <field name="value2" />
+              <field name="start_date"/>
+              <field name="file_acepted"/>
+              <field name="file_acepted2"/>
+            </tree>
+        </field>
+    </record>
+    
+    
+    <!-- Kanba view  -->
+    <record  model="ir.ui.view" id="test_kanban_view">
+      <field name="name">test.kanban</field>
+      <field name="model">test.odoo</field>
+      <field name="arch" type="xml">
+        <kanban class="o_res_partner_kanban">
+          <templates>
+            <t t-name="kanban-box">
+                <div class="oe_kanban_global_click">
+                    <div class="oe_kanban_details">
+                    <strong>
+                        <ul>
+                            <li>Name :<field name="name"/></li>
+                            <li>value :<field name="value"/></li>
+                            <li>Date :<field name="start_date"/></li>
+                        </ul>
+                    </strong>
+                    </div>
+                </div>
+            </t>
+        </templates>
+        </kanban>
+      </field>
+    </record>
+
+  <!-- Pivot View -->
+   <record model="ir.ui.view" id="test_pivot_view">
+    <field name="name">test.pivot</field>
+    <field name="model">test.odoo</field>
+    <field name="arch" type="xml">
+      <pivot>
+      </pivot>
+    </field>
+    </record>
+
+      <!-- Graph View -->
+   <record model="ir.ui.view" id="test_pivot_view">
+    <field name="name">test.graph</field>
+    <field name="model">test.odoo</field>
+    <field name="arch" type="xml">
+      <graph string="Test" type="bar">
+            <field name="value" type="row"/>
+            <field name="value2" type="measure"/>
+      </graph>
+    </field>
+    </record>
+
+
+    <!-- Search view-->
+    <record model="ir.ui.view" id="test_search_view">
+            <field name="name">test.search</field>
+            <field name="model">test.odoo</field>
+            <field name="arch" type="xml">
+                <search string="Tests">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="value" /> 
+                    <separator/>
+                    <filter name="test_status"
+                      domain="[('status','=','active')]" string="Subscribed"/>
+                    <filter name="test_status2"
+                      domain="[('status','=','inactive')]" string="NoSubscribed"/>
+                    <separator/>
+                    <filter name="test_date"
+                      domain="[('start_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('start_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    <group expand="0" string="Group By...">
+                      <filter name="group_by_state" string="Estatus"
+                        domain="[]" context="{'group_by':'status'}"/>                  
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+    <!-- Window action  -->
+    <record model="ir.actions.act_window" id="list_test">
+      <field name="name">TestMenu</field>
+      <field name="res_model">test.odoo</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,kanban,pivot,graph</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">Cear test nuevo
+        </p>
+      </field>
+    </record>
+
+
+    <!-- Window action 2 -->
+    <record model="ir.actions.act_window" id="list_filter_test">
+      <field name="name">TestFilter</field>
+      <field name="res_model">test.odoo</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form,kanban,pivot,graph</field>
+      <field name="context">{"search_default_test_status":1}</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">Cear test nuevo
+        </p>
+      </field>
+    </record>
+
+    
+    <!-- Top menu item -->
+    
+    <menuitem name="test_odoo" id="test_odoo_menu_root"/>
+    
+    <!-- menu categories -->
+    
+    <menuitem name="Menu 1" id="test_menu_1" parent="sale.menu_sale_invoicing"/>
+    <menuitem name="Menu 2" id="test_menu_2" parent="test_odoo_menu_root"/>
+    
+    <!-- actions -->
+   
+    <menuitem name="List" id="test_menu_1_list" parent="test_menu_1"
+              action="list_test"/>
+    <menuitem name="List2" id="test_menu_2_list" parent="test_menu_2"
+              action="list_test"/>
+
+    <menuitem name="Lista_filtrada" id="test_filtro_list" parent="sale.menu_sale_invoicing"
+              action="list_filter_test"/>
+  </data>
+</odoo> 
+
+
+
+
+
+
+
+
+
+   <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="test_odoo.action_window">
+      <field name="name">test_odoo window</field>
+      <field name="res_model">test_odoo.test_odoo</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="test_odoo.action_server">
+      <field name="name">test_odoo server</field>
+      <field name="model_id" ref="model_test_odoo_test_odoo"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->

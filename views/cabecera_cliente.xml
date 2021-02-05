@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="cabecera_res_partner" model="ir.ui.view">
+        <field name="name">cabecera_res_partner_form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet"  position="before">
+                <header>
+                    <button name="set_open" string="Re-name project" type="object"/>
+                    <button name="set_template" string="Sales number" type="object" />
+                    <button name="set_status" string="State Inactive" type="object"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+</odoo>
